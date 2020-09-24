@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\title{Differential Equations: MATH2341}
+\author{Javier Coindreau}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{example}{Example}
+
+\usepackage{amssymb}
+\usepackage{enumerate}
+
+\begin{document}
+
+\begin{titlepage}
+	\maketitle
+	\tableofcontents{}
+\end{titlepage}
+
+
+\section{Chapter 2}
+
+\subsection{2nd Order Differential Equations}
+A 2nd order differential equation is an equation containing a 2nd order derivative of form $a_2 x y'' + a_1 x y' + a_0 x y = f(x)$, where $a_2, a_1, a_0, f(x)$ are all continuous functions.
+If $f(x) \neq 0$, then it is a non-homogeneous equation, otherwise it is homogeneous.
+
+For our purposes, $a_2, a_1, a_0$ will all be nonzero constants, allowing for easier solutions.
+\subsubsection{Verifying DE \& Solutions}
+How many solutions do we expect for $ay''+by'+cy=0$?
+
+
+\begin{example} $y''-y'-6y=0$
+	\begin{enumerate}
+		\item Verify that $y_1x=e^{3x}$
+			\\ Plug in: $y_1=e^{3x}, y_2=3e{3x}, y_3=9e{3x}$
+			\\ $9e^{3x}-3e^{3x}-6e^{3x}=0$
+			\\ Valid solution
+		\item Verify that $y_1=2e^{3x}$
+			\\ Plug in $y_1=2e^{3x}, y_2=6e{3x}, y_3=18e{3x}$
+			\\ $18e^{3x}-6e^{3x}-12e^{3x}=0$
+			\\ Valid solution
+		\item Verify that $y_1=2e^{-2x}$
+			\\Plug in $y_1=e^{-2x}, y_2=-2e{-2x}, y_3=4e{-2x}$
+			\\ $4e^{3x}+2e^{3x}-6e^{3x}=0$
+			\\ Valid solution
+	\end{enumerate}
+\end{example}
+
+Any second order differential equation has at most two linearly independent solutions.
+\begin{definition}
+	Two functions $y_1$ and $y_2$ are linearly independent $\iff y_1 \neq ky_2, k \in \mathbb{R}$
+\end{definition}
+
+\subsubsection{Solutions \& Superposition}
+Suppose that $y_1, y_2$ are two linearly independent functions that satisfy a linear homogeneous differential equation. For such solutions, a general solution to the differential equation is 
+\begin{equation} y(x)=C_1 y_1(x)+C_2 y_2(x); C_1,C_2 \in \mathbb{R} \end{equation}
+
+\begin{itemize}
+	\item $e^{r_1 x},e^{r_2 x}$ are independent if $r_1 \neq r_2 $
+	\item $\sin{px}, \sin{qx}$ are independent if $p \neq q$
+\end{itemize}
+
+\begin{example} $y''-y'-6y=0$
+	\\ In this case, the general solution is $y(x)=C_1e^{3x}+C_2e^{-2x}$.
+\end{example}
+
+\subsubsection{2.3: Solving 2nd order homogeneous equations with constant coefficients}
+
+	What function has a $y, y', y''$ that are just scalar multiples of $y$?
+	
+	$e^{rx}$ always works, as $y=e^{rx}, y'=re^{rx}, y''=r^2e^{rx}$. When plugged in, this results in $ar^2e^{rx}+bre^{rx}+ce^{rx}=0$. $e^{rx}(ar^2+br+c)=0$. As the left term never becomes 0, the right term must.
+	
+Solve: $ar^2+br+c=0$
+\begin{indent}
+\\	This is known as the characteristic equation, as it resembles the original.
+\end{indent}
+\\Solutions can be derived from the quadratic function: $r_1, r_2=\frac{-b +- \sqrt{b^2-4ac}}{2a}$
+	\\From this, we find $r_1, r_2$ and get the two solutions, $e^{r_1 x}, e^{r_2 x}$
+\\3 possiblities arise from this.
+\begin{enumerate}
+	\item $b^2>4ac$.
+		\\$r_1=\frac{-b + \sqrt{b^2-4ac}}{2a}, r_2=\frac{-b -\sqrt{b^2-4ac}}{2a}$
+	\item $b^2=4ac$ (Be careful!)
+		\\$r_1=r_2=\frac{-b}{2a}$. This cannot happen, both are linearly dependent and we need two linearly independent solution! If $y_1=e^{r_1 x}$, how can we get a linearly independent function $y^2$ that satisfies the same equation?
+		\\Trick is to multiply $y_1$ with an extra $x$, resulting in $xe^{r_1 x}$. This works due to Abel's Theorem.
+		\begin{theorem}
+		If $y_1(x)$ is a solution to the equation $y''+p(x)y'+q(x)y=0$, then the second linearly independent solution is given by $y_2(x)=y_1(x)*\int{\frac{e^{-\int{p(x)dx}}}{(y_1(x))^2}dx}.$\end{theorem}
+		Our equation, in standard form, becomes $y''+\frac{b}{a}y'+\frac{c}{a}y'=0$.
+	$p(x)$ becomes $\frac{b}{a}$, and evaluating the integral results in $xe^{r_1}x$.
+	\\The general solution results in $y(x)=C_1 e^{r_1 x}+C_2 xe^{r_1 x}$
+	\item $b^2<4ac$
+		\\$\frac{-b + \sqrt{b^2-4ac}}{2a}=\frac{-b \pm i\sqrt{b^2-4ac}}{2a}, 
+		\frac{-b}{2a}\pm i \frac{\sqrt{4ac-b^2}}{2a}$.
+		\\We want to remove $i$. 
+		To do so, we simplify this to $p+iq$, where $p,q \in \mathbb{R}$. 
+		We want to find two real valued independent functions.
+		
+		$e^{r_1 x}=e^{(p+iq)x}=e^{px}e^{iqx}, e^{r_2x}=e^{(p-iq)x}=e^{px}e^{-iqx}$.
+		To solve this, we use Euler's Identity:
+		\begin{theorem}
+			\begin{equation}
+				e^{i\theta}=\cos{\theta}+i \sin{\theta}
+			\end{equation}
+			$e^\theta=1+\theta+\frac{\theta^2}{2!}..., 
+			\cos{\theta}=1-\frac{\theta^2}{2!}...,
+			\sin{\theta}=\theta-..., 
+			\\e^{i\theta}=\cos{\theta}+i \sin{\theta}$ 
+			due to presence of imaginary constant.
+		\end{theorem}
+		We can use this to extract the $i$ from the exponent: 
+		$e^{px}e^{iqx}=e^{px}(\cos{px}+i\sin{qx}, e^{px}e^{iqx}=e^{px}(\cos{px}-i\sin{qx}, 
+		\\y_1(x)=e^{px}\cos{qx}, y_2(x)=e^{px}\sin{qx}$.
+		
+		The general solution becomes 
+		\begin{equation}
+			y(x)=C_1e^{px}\cos{qx}+C_2e^{px}\sin{qx}=e^{px}(C_1\cos{qx}+C_2\sin{qx}
+		\end{equation}
+		Note: if $p=0, y(x)=C_1\cos{qx}+C_2\sin{qx}$ and becomes an oscillatory motion. 
+		If $p>0$, oscillations get stronger over time, and if $p<0$ motion becomes dampened.
+\end{enumerate}
+
+\begin{example} $y''-y'-6y=0$. \\The characteristic equation is $r^2-r-6=0$, which is factorable here to $(r-3)(r+2)=0, r_1=3, r_2=-2$. From this, the general solution becomes $y(x)=C_1e^{3x}+C_2e^{-2x}$.
+\end{example}
+\begin{example} $y''+6y'+9y=0$
+	\\The characteristic equation is $r^2+6r+9=0$ $6^2=4*1*9, 36=36$, root at $-3$. 
+	The general solution becomes $y(x)=C_1 e^{-3x}+C_2xe^{-3x}$
+\end{example}
+\begin{example}
+	$y''+16y=0$
+	\\The characteristic equation is $r^2+16=0, r^2=-16, r=\pm\sqrt{-16}=0\pm4i$.
+	The general solition becomes $y(x)=C_1\cos{4x}+C_2\sin{4x}$
+\end{example}
+\end{document}
