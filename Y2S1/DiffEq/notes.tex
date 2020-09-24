@@ -6,6 +6,7 @@
 \newtheorem{definition}{Definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{example}{Example}
+\newtheorem{derivation}{Derivation}
 
 \usepackage{amssymb}
 \usepackage{enumerate}
@@ -64,7 +65,7 @@ Suppose that $y_1, y_2$ are two linearly independent functions that satisfy a li
 	\\ In this case, the general solution is $y(x)=C_1e^{3x}+C_2e^{-2x}$.
 \end{example}
 
-\subsubsection{2.3: Solving 2nd order homogeneous equations with constant coefficients}
+\subsection{2.3: Solving 2nd order homogeneous equations with constant coefficients}
 
 	What function has a $y, y', y''$ that are just scalar multiples of $y$?
 	
@@ -97,7 +98,7 @@ Solve: $ar^2+br+c=0$
 		
 		$e^{r_1 x}=e^{(p+iq)x}=e^{px}e^{iqx}, e^{r_2x}=e^{(p-iq)x}=e^{px}e^{-iqx}$.
 		To solve this, we use Euler's Identity:
-		\begin{theorem}
+		\begin{derivation}
 			\begin{equation}
 				e^{i\theta}=\cos{\theta}+i \sin{\theta}
 			\end{equation}
@@ -106,7 +107,7 @@ Solve: $ar^2+br+c=0$
 			\sin{\theta}=\theta-..., 
 			\\e^{i\theta}=\cos{\theta}+i \sin{\theta}$ 
 			due to presence of imaginary constant.
-		\end{theorem}
+		\end{derivation}
 		We can use this to extract the $i$ from the exponent: 
 		$e^{px}e^{iqx}=e^{px}(\cos{px}+i\sin{qx}, e^{px}e^{iqx}=e^{px}(\cos{px}-i\sin{qx}, 
 		\\y_1(x)=e^{px}\cos{qx}, y_2(x)=e^{px}\sin{qx}$.
@@ -130,4 +131,66 @@ Solve: $ar^2+br+c=0$
 	\\The characteristic equation is $r^2+16=0, r^2=-16, r=\pm\sqrt{-16}=0\pm4i$.
 	The general solition becomes $y(x)=C_1\cos{4x}+C_2\sin{4x}$
 \end{example}
+\begin{example}
+	Find a particular solution for 
+	\begin{enumerate}
+		\item $y''+4y'+29y=0$
+			\\Not factorable, quadratic equation results in
+			$\frac{-4}{2} \pm \frac{10i}{2}$
+			\\$p=-2, q=5i, y(x)=e^{-2x}[C_1 \cos{5x} + C_2 \sin{5x}]$
+			\\ Solve when $y(0)=1 
+			\\y'(0)=1$: $y(0)=e^1 [C_1 \cos{0} + C_2 \sin{0} = 1*(C_1*1), C_1=1$
+			\\ Solve when $y'(0)=1$
+			\\$y'(x)=-2e^{-2x}[C_1 \cos{5x} + C_2 \sin{5x}]+(-5 C_1 \sin{5x}+5 C_2 \cos{5x})$
+			\\$y'(0)=-2[C_1*1+C_2*0]+(-5 C_1 * 0 + 5 C_2 * 1) = -2C_1+5C_2, C_2=\frac{2}{5}$
+			\\The particular solution becomes $y_p(x)=e^{-2x}[\cos{5x}+\frac{2}{5}\sin{5x}]$
+		\item $y''+3y'+2y=0$
+			\\Factors to $(r+2)(r+1), r_1=-2, r_2=-1, y(x)=C_1e^{-2x}+C_2e^{-1x}$
+			\\Solve for $y(0)=1$
+			\\$y(0)=C_1+C_2=1$
+			\\Solve for $y'(0)=1$
+			\\$y'(x)=-2 C_1 e^{-2x}-C_2e^{-1x}=-2 C_1- C_2=1$
+			\\Solving for $C_1$ gives $C_1=-2, C_2=3$
+			\\The particular solution becomes $y(x)=-2e^{-2x}+3e^{-x}$
+		\item $9''+6y'+9y=0$
+			\\Factors to one root at $-3, y(x)=C_1e^{-3x}+C_2xe^{-3x}$
+			\\Solve for $y(0)=2$: $y(0)=C_1=2$
+			\\Solve for $y'(0)=3$
+			\\$y'(x)=-3C_1e^{-3x}+C_2e^{-3x}-3C_2e^{-3x}$
+			\\$y'(0)==3C_1+C_2-3C_2=3*2-2C_2, C_2=9$
+			\\Particular solution becomes $y(x)=2e^{-3x}+yxe^{-3x}$
+	\end{enumerate}
+\end{example}
+\subsection{2.4: Applications}
+\subsubsection{Free Mechanical Vibrations}
+Given a spring attached to a mass with a dampener, what mathematical model can simulate its motion? Since it is a free vibration, it has no external forces. This means that it is guided purely by the force for the spring and the dampener.
+Since we are observing accelerated motion, it will be a 2nd order differential equation ($a=\frac{d^2x}{dt^2}$).
+The total force from this spring is given by Hooke's law, 
+\begin{equation} F_s = -kx, k=\frac{|F_s|}{m} > 0 \end{equation}
+The damping force exerted on the system by the dashpot is proportional to its velocity,
+\begin{equation} F_d = -cv \end{equation}
+where $c$ is the damping constant.
+
+We know that the velocity $v=\frac{dx}{dt}$, so the total force becomes $F=F_s+F_d$, and replacing fixed values with differentials becomes $m \frac{d^2x}{dt^2} = -kx -c \frac{dx}{dt}$, or alternatively $mx''+cx'+kx=0$.
+
+Being a real world problem, we know that $m$ must be greater than 0, $c$ may be 0 if there is no dashpot, and $k$ is greater than 0 due to the presence of the spring.
+At equilibrium, $x(0)=0, x'(0)=0$ as the object starts at rest. In this case, we can take compression as movement in the negative $x$ axis and stretching in the positive $x$ axis.
+
+Now, let's go through different cases.
+\begin{enumerate}[a: ]
+	\item No dashpot (undamped oscillation, $c=0$):
+		\\Since it is undampened, this oscillation should never end. 
+		The equation in this case would be $mx''+kx=0$, simplifying to $x''+\frac{k}{m}x=0$. 
+		We can then extract the constant $\omega$, the natural frequency of the system, as $\omega=\sqrt{\frac{k}{m}}, \omega^2=\frac{k}{m}$.
+		\\The characteristic equation here becomes 
+		$r^2+\omega^2=0, r^2=-\omega^2, r=\pm i\omega$.
+		This equation will consist of purely oscillatory terms, and will become 
+		$x(t)=C_1 \cos{\omega t}+C_2 \sin{\omega t}$.
+		It can be confusing for it to have both sin and cos, so we can rewrite this in amplitude-phase form, resulting in $x(t)=A \cos{(\omega t-\phi)}$, where $\phi=\tan^{-1}{C_2/C_1}$.
+	\begin{derivation}
+		\begin{equation} x(t)=A \cos{(\omega t-\phi)} \end{equation}
+		From original, we create $\sqrt{C_1^2+C_2^2}(\frac{C_1 \cos{\omega t}}{\sqrt{C_1^2+C_2^2}}+\frac{C_1 \sin{\omega t}}{\sqrt{C_1^2+C_2^2}})$. 
+		We then extract $A$, which becomes the length of a triangle with sides $C_1,C_2$, from the Pythagorean Theorem, creating a new function $A(\frac{\cos {\omega t}}{A} + \frac{\sin {\omega t}}{A})$. We can then use the trig identity $\cos{(A-B)}=\cos{A}\cos{B}+\sin{A}\sin{B}$ to simplify and create the final function.
+	\end{derivation}
+\end{enumerate}
 \end{document}
