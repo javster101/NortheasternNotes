@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\title{Physics 2 for Engineers: PHYS1155}
+\author{Javier Coindreau}
+
+\newtheorem{definition}{Definition}
+\newtheorem{theory}{Theory}
+\newtheorem{example}{Example}
+\newtheorem{derivation}{Derivation}
+
+\usepackage{amssymb}
+\usepackage{enumerate}
+
+\begin{document}
+
+
+\begin{titlepage}
+	\maketitle
+	\tableofcontents{}
+\end{titlepage}
+\section{Electric Potential}
+\subsection{Electric Potential Energy}
+\subsubsection{Movable charges in a field}
+
+What happens to charges that are free to move? Do they accelerate at a constant rate?
+
+We could use the known forces of electric fields to determine their acceleration over time, but that results in multiple differentials due to the changing distance $r$ as charges move. It results in two coupled differential equations that both depend on $r_1,r_2$.
+
+We can, however, move to viewing forces through terms of energy to determine changes in state between points.
+
+\begin{definition}
+	A conservative force is a force whose work done depends only on the initial and final positions, and for which we can define a potential energy function $U$
+	\begin{equation} U(x)=-\int{F \cdot d\vec{x}} \end{equation}
+\end{definition}
+
+From this, we can use electric potential to translate electric forces to mechanical work.
+
+This works because electricity is a conservative force, as only movement along electric field lines do any work.
+
+For electrostatics, the potential is defined as 
+\begin{equation} U_e=-\int{\frac{q_1 q_2}{4\pi\epsilon_0 r^2} r\hat \cdot dr}, U_e=\frac{q_1 q_2}{4\pi\epsilon_0 r}=\frac{kq_1 q_2}{r}
+\end{equation}
+
+Can be positive or negative, and units are joules.
+
+\begin{example}
+	Two protons are separated by 1cm and not in motion relative to one another. They are not fixed in place.
+	\begin{enumerate}[a)]
+		\item What is the initial potential energy of the configuration?
+
+			Plug in: $ \frac{k e^2}{r_1}=\frac{8.99*10^9*1.6*10^{-19}}{0.01}=2.3*10^{-26} J$
+		\item How fast are they moving at time $t$?
+
+			$E_f=E_j, \frac{ke^2}{r_1}+0=\frac{ke^2}{r_2}+0.5 m v^2$
+			\\The potential energy here is used as the energy of the entire system. Because of that, we need to multiply the kinetic energy times 2 to become $\frac{ke^2}{r_1}+0=\frac{ke^2}{r_2}+m v^2$
+
+			Solve:
+			$v=\sqrt{(\frac{ke^2}{r_1}-\frac{ke^2}{r_2})\frac{1}{m}}=3.62 m/s$
+		\item How much work is done to bring them back together?
+
+			$W_{me}=-W_e=\Delta U_E=U_1-U_2=\frac{ke^2}{r_1}-\frac{ke_2}{r_2}=mv^2=2.18*10^{-26} J$
+	\end{enumerate}
+\end{example}
+\subsubsection{Special case of uniform electric fields}
+When electric fields are constant, we can simplify the potential energy to rely on the field itself.
+
+\begin{equation} F=qE=constant \iff \Delta U_e= q E\Delta r \end{equation}
+
+	$\Delta r$ is the distance through the electric field. Much like gravitational potential energy, you must set a reference point to solve problems involving constant fields. 
+
+
+\end{document}
