@@ -10,6 +10,10 @@
 
 \usepackage{amssymb}
 \usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{mathrsfs,relsize,array}
+
+\newcommand\laplace{\mathlarger{\mathlarger{\mathscr{L}}}}
 
 \begin{document}
 
@@ -177,7 +181,7 @@ Being a real world problem, we know that $m$ must be greater than 0, $c$ may be 
 At equilibrium, $x(0)=0, x'(0)=0$ as the object starts at rest. In this case, we can take compression as movement in the negative $x$ axis and stretching in the positive $x$ axis.
 
 Now, let's go through different cases.
-\begin{enumerate}[a: ]
+\begin{enumerate}[Opt. a: ]
 	\item No dashpot (undamped oscillation, $c=0$):
 		\\Since it is undampened, this oscillation should never end. 
 		The equation in this case would be $mx''+kx=0$, simplifying to $x''+\frac{k}{m}x=0$. 
@@ -192,5 +196,319 @@ Now, let's go through different cases.
 		From original, we create $\sqrt{C_1^2+C_2^2}(\frac{C_1 \cos{\omega t}}{\sqrt{C_1^2+C_2^2}}+\frac{C_1 \sin{\omega t}}{\sqrt{C_1^2+C_2^2}})$. 
 		We then extract $A$, which becomes the length of a triangle with sides $C_1,C_2$, from the Pythagorean Theorem, creating a new function $A(\frac{\cos {\omega t}}{A} + \frac{\sin {\omega t}}{A})$. We can then use the trig identity $\cos{(A-B)}=\cos{A}\cos{B}+\sin{A}\sin{B}$ to simplify and create the final function.
 	\end{derivation}
+	\item Damped oscillation ($c \neq 0$)
+		\\The equation is $mx''+cx'+kx=0$, with a characteristic equation of $mr^2+cr+k=0$. 
+		We can use the quadratic formula here to get the roots as $\frac{-c \pm \sqrt{c^2-4mk}}{2m}$,
+		resulting in roots of $r_1=\frac{-c}{2m}+\frac{\sqrt{c^2-4mk}}{2m}, r_2=\frac{-c}{2m}-\frac{\sqrt{c^2-4mk}}{2m}$. 
+				Since they are both negative due to the negative poking outside, we can guarantee that $r_2$ is negative since $m,k,c>0$.
+				$r_1$ is also negative, since $\sqrt{x^2-b}$ will always be less than just $x$ if $b$ is positive, which it is in our case. We can then use the cases from the first section.
+		\begin{enumerate}
+			\item $C^2>4mk$ is considered overdampened, as there will be two real negative roots. This results in $x(t)=C_1e{r_1t}+C_2e^{r_2t}$
+			\item $C^2=4mk$ results in a critically damped solution with one real root. This results in $x(t)=C_1e^{r_1t}+C_2xe^{r_1t}=e^{r_1t}(C_1+C_2x)$
+			\item $C^2<4mk$ is underdampened, so oscillations will appear. 
+				In this case we get $x(t)=e^{\frac{-C}{2m}}[C_1\cos{(\frac{\sqrt{4mk-C^2}}{2m})}+C_2\sin{(\frac{\sqrt{4mk-C^2}}{2m})}$. 
+				This function has no natural frequency, and $q$ in this case is considered a pseudofrequency due to damping.
+			This can be rewritten using amplitude-phase as $x(t)=Ae^{\frac{-C}{2m}}\cos{(\omega t-\phi)}$
+		\end{enumerate}
 \end{enumerate}
+
+\subsection{Non homogeneous 2nd order differential equations}
+These are of the form $ay''+by'+cy=f(x)$, where $f(x)$ is a differentiable and continuous function.
+\begin{theorem}
+	Given a differential equation of the form $ay''+by'+cy=f(x)$, the general solution is given by 
+	\begin{equation} y(x)=y_h(x)+y_p(x) \end{equation} where $y_h(x)$ is the homogeneous solution to the
+	differential equation and $y_p(x)$ is a particular solution for the non-homogeneous equation.
+\end{theorem}
+
+\subsubsection{Finding $y_p(x)$ with undetermined coefficients}
+
+To find $y_p(x)$, we first make a guess for $y_p$ based on $f(x)$ with an unknown coefficient. This is then plugged into the differential equation  $ay_p''+by_p'+cy_p=f(x)$ and solved for the unknown coefficient.
+
+The coefficient is chosed based on the behavior of $f(x)$
+
+\begin{enumerate}
+	\item $f(x)=\alpha e^{kx}$, the guess should be $y_p=Ae^{kx}$
+	\item $f(x)=\sin{kx}$ or $\cos{kx}$. This is a difficult case, because unlike the above, the canceling step in the examples does not automatically happen.
+		Therefore, we use $y_p=A\cos{(kx)}+B\sin{(kx)}$. It is very important to write both, even if only one is actually there.
+	\item $f(x)=$polynomial of degree $n$, guess should be a polynomial of the same degree.
+		Being a general polynomial, all terms must be written even if some terms are missing. Examples are $f(x)=2x, y_p=Ax+B$
+\end{enumerate}
+
+\begin{example}
+	$y''+3y'+2y=2e^{4x}$, find the general solution.
+	
+	 \begin{enumerate}[Step 1:]
+		 \item Always find the homogeneous solution: $y''+3y'+2y=0, r^2+3r+2=0, (r-1)(r-2)=0, r_1=1, r_2=2, y_h(x)=C_1e^x+C_2e^{2x}$
+	
+		 \item Find the specific solution: Guess $y_p=Ae^{4x}$. 
+	\\Then, find $y', y''; y'=4Ae^{4x}, y''=16Ae^{4x}$. 
+	\\Plugged in, $16Ae^{4x}-12Ae^{4x}+2Ae^{4x}=2e^{4x}$. 
+	\\We can cancel $e^{4x}$, resulting in $16A-12A+2A=2, 6A-2, A=1/3$. 
+	\\Therefore, $y_p=\frac{1}{3}e^{4x}$
+
+		\item Combine both to create $y(x)=C_1e^x+C_2e^{2x}+\frac{1}{3}e^{4x}k$
+	\end{enumerate}
+\end{example}
+
+\begin{example}
+	$y''+3y'+2y=2sin{3x}$
+	\begin{enumerate}[Step 1:]
+		\item Homogeneous solution is $y_h(x)=C_1e^x+C_2e^{2x}$, same as before.
+
+		\item Guess: $y_p=A\cos{3x}+B\sin{3x}$.
+	\\$y', y'': y'=-3A\sin{3x}+3B\cos{3x}, y''=-9A\cos{3x}-9B\sin{3x}$
+	\\Plugged in, 
+	\\$-9A\cos{3x}-9B\sin{3x}
+	\\-9B\cos{3x}+9A\sin{3x}
+	\\+2A\cos{3x}+2B\sin{3x}
+	\\=0\cos{3x}+2\sin{3x}$
+	\\After simplifying, $(-7A-9B)\cos{3x}+(9A-7B)\cos{3x}=0\cos{3x}+2\sin{3x}$.
+	Terms should match, so $9A-7B=2, -7A+9B=0, B=\frac{-7}{65}, A=\frac{9}{64}$
+
+		\item Merge, $y(x)=C_1e^x+C_2e^{2x}+\frac{9}{65}\cos{3x}-\frac{7}{65}\sin{3x}$
+	\end{enumerate}
+\end{example}
+
+\begin{example}
+	$y''+3y'+2y=2x+1$
+	\begin{enumerate}[Step 1:]
+		\item $y_h(x)=C_1e^x+C_2e^{2x}$
+
+		\item Guess: $y_p=Ax+B, y_p'=A, y_p''=0$
+			\\Plugged in, $-3A+2Ax+2B=2x+1, A=1, B=2, y_p=x+2$
+		\item Merge, $y(x)=C_1e^x+C_2e^{2x}+x+2$
+	\end{enumerate}
+\end{example}
+
+What if multiple of these were combined into the same equation? What if you had $y''-3y'+2y=2e^{4x}+2\sin{3x}+2x+1$?
+
+Fortunately, you can solve them individually and sum them together. With the previous one, for example, the result would be $y(x)=C_1e^{2x}+C_2e^{2x}-1/3 e^{4x}-\frac{7}{65}\cos{3x}+\frac{9}{65}\sin{3x}+x+2$.
+
+Another option would be to start with a single guess containing all the equation types given, solving $y_p = Ae^{4x}+B\cos{3x}+C\sin{3x}+Dx+E$
+
+\begin{example}
+	Find the general solution for $y''-y'-2y=3e^{2x}$.
+
+	Characteristic eq: $r^2-r-2=0, (r-2)(r+1)=0, y_h(x)=C_1e^{2x}+C_2e^{-x}$
+
+	Guess: $y_p=Ae^{2x}, y_p'=2Ae^{2x}, y_p''=4Ae^{2x}$. 
+
+	Eq: $4Ae^{2x}-2Ae^{2x}-2Ae^{2x}=3e^{2x}, 0=3e^{2x}$. Impossible? Options are $0=3, e^{2x}=0$. Neither are possible! Therefore, guess is wrong here.
+\end{example}
+
+Why is this not possible? Because our guess is linearly dependent with $C_1e^{2x}$, which is not allowed! Since $C_1e^{2x}$ is unchangeable, we must change the guess in the same way we'd do it before, by making the guess $Axe^{2x}$. Unfortunately, solving this brings in the product rule: $y_p'=Ae^{2x}+2Axe^{2x}, y_p''=2Ae^{2x}+2Ae^{2x}+4Axe^{2x}=4Ae^{2x}+4Axe^{2x}$. This is then used as before.
+
+\begin{example}[10]
+	$4Ae^{2x}+4Axe^{2x}-Ae^{2x}-2Axe^{2x}-2Axe^{2x}=3e^{2x}, 4Ae^{2x}-Ae^{2x}=3e^{2x}$ (Note: the terms with x must cancel, otherwise math was done wrong)
+
+	$3Ae^{2x}=3e^{2x}, A=1, y(x)=C_1e^{2x}+C_2e^{-x}+xe^{2x}$ (Don't forget the x!)
+\end{example}
+
+Using this, we can make a better order of approach:
+
+\begin{enumerate}
+	\item Find $y_h$
+	\item Write the normal $y_p$ guess
+	\item Compare each term in $y_p$ to each term in $y_h$
+	\item If any are linearly dependent, multiply ONLY the linearly dependent terms in $y_p$ by $x^n$ where $n$ is the smallest positive integer that ensures that the term is linearly independent.
+	\item Solve for $y_p$
+\end{enumerate}
+
+\begin{example}
+	Find the general solution for $y''-4y'+4y=3e^{2x}$
+
+	$y_h$: $r^2-4r+4=0, (r-2)(r-2), y_h(x)=C_1e^{2x}+C_2xe^{2x}$
+	
+	$y_p$: $Ae^{2x}$: LINEARLY DEPENDENT. Lowest power of $x$ needed here is $x^2, y_p=Ax^2e^{2x}$
+
+	Differentiate: $y_p'=2Ax^2e^{2x}+2Axe^{2x}, y''=4Axe^{2x}+4Ax^2e^{2x}+4Axe^{2x}+2Ae^{2x}$
+
+	$y_p(x)=4Ax^2e^{2x}+8Axe^{2x}+2Ae^{2x}-8Ax^2e^{2x}-8Axe^{2x}+4Ax^2e^{2x}=2Ae^{2x}=3e^{2x}, 2A=3, A=1.5$
+
+	$y(x)=C_1e^{2x}+C_2xe^{2x}+1.5x^2e^{2x}$
+\end{example}
+
+\subsection{Resonance}
+What is an example of a resonating system?
+
+\begin{itemize}
+	\item Musical Instruments
+	\item Noise cancelling headphones
+	\item Kids on a swing
+	\item Microwave ovens with water
+\end{itemize}
+
+In these systems, there is a natural frequency, a frequency at which the system will keep oscillating even when forced to go further.
+For example, in a dashpot system $mx''+kx=F_0 \cos{\alpha t}$, resonance happens when the desired frequency $\alpha$ is equal to the ideal frequency $\sqrt{\frac{k}{m}}$
+
+\section{Chapter 3: Laplace Transforms}
+\subsection{Background}
+
+Frequency is the inverse of time, in cycles/unit of time. We can take a differential equation in the time domain and transform it into an
+algebraic equation in the frequency domain. This makes them notably easier to manipulate when compared to differentials, but
+requires us to solve it in this new frequency domain. Once done, we can take it back to the time domain.
+
+\begin{definition}
+	Lef $f(t)$ be a function which is not exponentially growing. We define the laplace transform of $f(t)=\laplace[f(t)]=\int_0^\infty{e^{-st}f(t)dt}=F(s)$
+\end{definition}
+
+Why does this work?
+
+\begin{itemize}
+	\item he negative in the exponential is purely for convergence reasons.
+	\item All applications of exponential growth/decay or oscillatory function are analyzable through a laplace transform, partially due
+		to Euler's identity $e^{it}=\cos{t}+i\sin{dt}$
+\end{itemize}
+
+In Laplace transforms, $e^{st}=e^{at}+e^{ibt}, s=a+ib$. Using this, exponential/sinusoidal/both types of problems are analyzable.
+
+\begin{example}
+	$f(t)=k, \laplace[f(t)]=\int_0^\infty{e^{-st} k dt}=k \lim_{b\rightarrow\infty}{\int_0^\infty{e^{-st}dt}}=\frac{k}{s}$
+\end{example}
+
+\begin{example}
+	$Find \laplace[e^{at}], \int_0^\infty{e^{-st}e^{at}dt}=\lim_{b\rightarrow\infty}{\int_0^b{e^{-(s-a)t}dt}}
+	\\=\frac{1}{-s+a}e^{-s+a}, 0\rightarrow \infty, \frac{1}{-s+a}e^{-\infty+a}-1=\frac{1}{s-a}$
+
+\end{example}
+
+Doing this for every Laplace sucks, but luckily all Laplace transforms are tabulated (Available in Canvas->Modules->Handouts(?)).
+
+
+\begin{example}
+	Using tables:
+
+	\begin{itemize}
+		\item $\laplace[\sin{3t}]=\frac{3}{s^2+9}$
+		\item $\laplace[\cos{2t}]=\frac{s}{s^2+4}$
+		\item $\laplace[e^{-3t}\cos{5t}]=\frac{s+2}{(s+2)^2+25}$
+	\end{itemize}
+\end{example}
+
+Generalizing, $\laplace[a f(t) \pm b g(t)]=a F(s)\pm b G(s)]$
+
+\begin{example}
+	$\laplace[2-6e^{3t}+t^4-5\cos{t}]=\frac{2}{s}-\frac{6}{s-3}+\frac{4!}{s^{5}}-5\frac{s}{s^2+1}$
+\end{example}
+
+\subsection{Inverse Laplace Transforms}
+
+\begin{definition} 
+	Given a function $f(t)$ who's Laplace Transform is $F(s)$, the inverse Laplace Transform is defined by $\laplace^{-1}[F(s)]=f(t)$
+\end{definition}
+
+This is a more algebraically involved procedure, as we need to transform cases to match the table.
+
+\begin{example}
+
+	\begin{enumerate}
+		\item $\laplace^{-1}[\frac{12}{x}]=12$
+		\item $\laplace^{-1}[\frac{1}{s-4}]=e^{4t}$
+		\item $\laplace^{-1}[\frac{s}{s^2+16}]=\cos{4t}$
+		\item $\laplace^{-1}[\frac{1}{s^2+16}]=?$\\
+			This almost looks like case 6, $\frac{k}{s^2+k^2}$. What we can do is $\frac{1}{4}\laplace^{-1}[\frac{4}{s^2+16}]$ which becomes $0.25\sin{4t}$
+		\item $\laplace^{-1}[\frac{s}{(s-2)^2+9}]$ resembles 7.
+			\\Transform it to $\frac{s-2+2}{(s-2)^2+9}$, then $\frac{s-2}{(s-2)^2+9}+\frac{2}{(s-2)^2+9}$.\\
+			Finally use table (transforming $\frac{2}{3}\frac{3}{(s-2)^2+9}$) to become $e^{2t}\cos{3t}+\frac{2}{3}e^{2t}\sin{3t}$
+		\item $\laplace^{-1}[\frac{5}{s^2+3s+2}]$\\
+			Factor: $\frac{5}{(s+2)(s+1)}$, decompose with partial fractions: $\frac{A}{s+2}+\frac{B}{s+1}, A(s+1)+B(s+2)=5.$\\
+			$B(-1+2)=5, B=5, A(-2+1)=5, A=-5, \frac{-5}{s+2}+\frac{5}{s+1}$\\
+			Now that its usable, use table: $-5e^{2t}+5e^{-t}$
+	\end{enumerate}
+\end{example}
+
+\subsection{Initial value problems with Laplace Transforms}
+
+If $y$ is a function of $t$, $\laplace[y(t)]=Y(s)$. What is the Laplace transform for its derivative, $y'$? From the definition, $\int_0^\infty e^{-st}y'(t)dt$, we can do 
+integration by parts to get $-y(0)+s\laplace[y(t)]$, \begin{equation}\laplace[y']=sY(s)-y(0)\end{equation} (case 14).
+
+Therefore, the steps involved are:
+\begin{enumerate}
+	\item Take the Laplace on both sides, and apply the initial condition right away.
+	\item Solve algebraically for $Y(s)$.
+	\item Find the inverse Laplace transform $y(t)$ of $\laplace^{-1}[Y(s)]$
+\end{enumerate}
+
+\begin{example}
+	Solve using LT: $y'-3y=e^{5t}, y(0)=-1$\\
+	Take Laplace of all terms: $\laplace[y']-3\laplace[y]=\laplace[e^{5t}], sY(s)-y(0)-3Y(s)=\frac{1}{s-5}$\\
+	Plug in initial value: $sY(s)+1-3Y(s)=\frac{1}{s-5}$\\
+	Algebra: $(s-3)Y(s)=\frac{1}{s-5}-1, Y(s)=\frac{1}{(s-5)(s-3)}-\frac{1}{s-3}$\\
+	Find inverse of all terms: $y(t)=\laplace^{-1}[\frac{1}{(s-5)(s-3)}]-\laplace^{-1}[\frac{1}{s-3}]$\\
+	Apply partial fractions to first: $1=A(s-3)+B(s-5), B=-0.5, A=0.5, \laplace^{-1}[\frac{0.5}{(s-5)}-\frac{0.5}{(s-3)}+[\frac{1}{s-3}]$\\
+	All case 3, apply: $y(t)=0.5e^{5t}-1.5e^{3t}$
+\end{example}
+
+This itself is not too useful, but it gets easier and easier with higher order equations. For example, 2nd order equations have a Laplace transform $\laplace[y'']$
+of \begin{equation} \laplace[y'']=s^2Y(s)-sy(0)-y'(0) \end{equation}
+
+
+\begin{example} 
+	Solve using LT: $y''+3y'+2y=0, y(0)=1, y'(0)=1$\\
+	Take LT of all terms: $(s^2Y(s)-sy(0)-y'(0))+3(sY(s)-y(0))+2Y(s)=0, 
+	\\s^2Y(s)-sy(0)-y'(0)+3Y(s)-3y(0)+2Y(s)=0$\\
+	Plug in initial values: $s^2Y(s)-s-1+3sY(s)-3+2Y(s)=0, (s^2+3s+2)Y(s)-s-4=0$\\
+	Solve for $Y(s)$: $Y(s)=(s+4)(s^2+3s+2)$ (Note, not a coincidence that denominator looks like characteristic eq.)\\
+	Factor: $Y(s)=\frac{s+4}{(s+1)(s+2)}$\\
+	Take Laplace (with partial frac): $s+4=A(s+2)+B(s+1), s=-2, 2=-B,B=-2, s=-1, A=1, A=3$.\\
+	$Y(s)=\laplace^{-1}[\frac{3}{s+1}-\frac{2}{s+2}]$\\
+	Find in chart: $Y(s)=3e^{-t}-2e^{-2t}$ (BONUS: We know the form is $C_1e^{rt}+C_2e^{ut}$ from previous chapters, so we know our answer here is correct as it matches!)
+\end{example}
+
+In general, a 2nd order equation $ay''+by'+cy=f(t)$ becomes $a(s^2Y(s)-sy(0)-y'(0))+b(sY(s)-y(0))+cY(s)=\laplace[f(t)]$.\\
+Rewritten, it becomes $Y(s)=\frac{\laplace[f(t)]+asy(0)+ay'(0)+by(0)}{as^2+bs+c}$, at which point you apply partial fractions if needed.
+
+\subsection{Shifting Theorems and Discontinuous Inputs}
+
+
+\begin{theorem}[First Shifting Theorem]
+	Let $\laplace[f(t)]=F(t)$.
+
+	Then, $\laplace[e^{at}f(t)]=F(s-a)$
+\end{theorem}
+
+This is visible in case 2 in the table, $\laplace{t^n}=\frac{n!}{s^{n+1}}$, and case 4, $\laplace{e^{at}t^n}=\frac{n!}{(s-a)^{n+1}}$.
+Case 5 and 7 share the same properties ($\cos{kt}$ and $e^{at}\cos{kt}$), and 6 and 8.
+
+\begin{definition} [Unit Step Function (or Heaviside Step Functions)]
+	Defined as $U(t-a)$ or \\$H(t-a)=\begin{cases}
+		0 & \text{if $0\leq t<a$}\\
+		1 & \text{if $a \leq t$}
+
+	\end{cases}$
+\end{definition}
+
+The step function is very useful for cases where some input can be toggled. We can use this to analyze differential equations with a toggle. 
+These toggles can be added together as well, for example as $5U(t-2)-9U(t-8)$, with two switches toggled at the given times. A function like this can be 
+written as $\begin{cases} 0 & 0 \leq t < 2 \\ 5 & 2 \leq t < 8 \\ -4 & 8 \leq t \end{cases}$.
+
+In a generic case where the function toggles from a value of $f_1(t)$ to $f_2(t)$, it can be rewritten as $f(t)=f_1(t)+U(t-t_1)(f_2(t)-f_1(t))$. 
+In general, a step function witn $n$ terms and $n-1$ different times can be written as $f_1+U(t-t_1)(f_2-f_1)+U(t-t_2)(f_3-f_2)+U(t-t_3)(f_4-f_3)...$
+
+\subsubsection{Laplace transform of Heaviside function}
+
+What is $\laplace[U(t-a)]$? Breaking up the integral into the terms from $0$ to $t_1$ and from $t_1$ to $\infty$, it becomes $\frac{e^{-as}}{s}$.
+
+
+\begin{theorem}[Second Shifting Theorem]
+	Let $\laplace[f(t)]=F(s)$.
+	
+	Then $\laplace[u(t-a)*f(t-a)]=e^{as}F(s)$
+\end{theorem}
+
+\begin{example} $\laplace[U(t-2)e^{3(t-2)}]$
+
+	We see that the two $t-2$ terms match. We get $e^{-2s}$, and the func here is $f(t)=e^{3t}$, so answer is $\frac{e^{-2s}}{s-3}$.
+\end{example}
+
+\begin{example} $\laplace[U(t-7)\cos{4(t-7)}]$
+
+	Again, $t-7$ match and $f(t)=\cos{4t}$ so we get $\frac{se^{-7t}}{s^2+16}$.
+\end{example}
+
+\begin{example} $\laplace[U(t-6)e^{2t}]$
+
+	Harder here, we don't have $t-6$ in the exponent. If we force a $t-6$ in, we can add 12 to compensate and get $e^{2(t-6)}e^{12}$. We then get 
+	\\$\laplace[U(t-6)e^{2(t-6)}e^{12}]=e^{12}\laplace[U(t-6)e^{2(t-6)}]=\frac{e^{12}e^{-6s}}{s-2}$
+\end{example}
 \end{document}
