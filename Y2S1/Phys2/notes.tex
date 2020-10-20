@@ -68,5 +68,168 @@ When electric fields are constant, we can simplify the potential energy to rely 
 
 	$\Delta r$ is the distance through the electric field. Much like gravitational potential energy, you must set a reference point to solve problems involving constant fields. 
 
+\subsection{Electric Potential}
+
+Electric potential is a scalar quantity denoting the force applied on a test charge by an electric field.
+
+In an electric field, a charge experiences a force of $F=q E$. At a potential $V$, a charge has potentila energy of $V=\int{E \cdot dr}$. If the electric field is constant, $V=Eh$.
+
+As an analog, weather systems work well. Defining isobaric contours (equal pressure lines), we can determine the direction of the wind by tracing perpendicular lines from high to low pressure. The pressure has a scalar value, while the wind has a vector value. This correlates well to voltage, where voltage contour lines can be drawn and the electric field flows from high to low voltage lines, where voltage is a scalar field and electric fields are vector fields.
+:w:
+\subsection{Relationship among fields and potentials}
+
+Voltage is electric potential energy per charge, voltage is an electric field applied over a distance, electric force is electric field per charge, and electric potential energy is electric force over a distance.
+
+\section{Capacitance and Dielectrics}
+\subsection{Capacitance}
+\subsubsection{Definition}
+How do we store solar energy for use at other time? Common methods are compressed air, dams, molten salt, concrete, and capacitors!\\
+\begin{tabular}{l|l}
+	Batteries & Capacitors \\
+	\hline
+	Long charge time & Charge quickly\\
+	Slow discharge & Fast discharge \\
+	Corrosive chemicals & Not corrosive \\
+	Low energy density & High energy density \\
+	Designed for long term storage & For short term storage \\
+\end{tabular}
+
+A capacitor can be seen as two parallel plates storing charge between them. Complex capacitors often seem like they're cylindrical, but internally they always resemble two parallel plates. The material inside is the dielectric, which is always some form of insulator.
+
+Mathematically it is represented through the value of capacitance, 
+
+\begin{equation} C=\frac{Q}{V} \end{equation}
+
+with the capacitance value C named the Farad. 
+
+\subsubsection{Calculating capacitance}
+
+Calculating capacitance always follows the same process:
+
+\begin{enumerate}
+	\item Find the electric field.
+	\item Find the voltage across the plates
+	\item Find the capacitance.
+\end{enumerate}
+
+Since they are parallel plates, the electric field will almost always be the same, $E=\frac{\sigma}{\epsilon_0}y$. The voltage is also always similar. Solving the integral, the potential difference becomes $\frac{\sigma d}{\epsilon_0}$.
+
+From these equations, we can get another definition of the capacitance, 
+\begin{equation} C=\frac{Q}{V}=\frac{Q}{\frac{\sigma d}{\epsilon}}=\frac{Q}{\frac{Q d}{A \epsilon}}=\frac{A \epsilon}{d} \end{equation}
+The key assumption here is that the field is uniform, which is only really usable if the plate area $A$ is much greater than the distance $d$.
+
+\subsection{Capacitors in circuits}
+
+In capacitors in series, each capacitor has the same charge $Q$, because the buildup of charges one one induces a voltage across the other of equal magnitude. These voltages across the capacitors depend on the capacitance.
+\begin{equation} V_{ab}=V_1+V_2=\frac{Q_1}{C_1}+\frac{Q_2}{C_2}=Q(\frac{1}{C_1}+\frac{1}{C_2})\end{equation}
+\begin{equation} V=\frac{Q}{C_{eq}} \end{equation}
+
+Their total capacitances $C_{eq}$, will be equal to 
+
+\begin{equation} \frac{1}{C_{eq}}=\frac{1}{C_1}+\frac{2}{C_2}... \end{equation}
+
+In parallel, the capacitors always have the same voltage. There is no guarantee that the charges will be equal, however, since charges depend on the capacitances of their respective capacitors.
+
+\begin{equation} Q_{eq}=Q_1+Q_2=C_1V_1+C_2V_2=(C_1+C_2)V \end{equation}
+\begin{equation} Q_{eq}=C_{eq}V \end{equation}
+
+Their total capacitances are equal to 
+
+\begin{equation} C_{eq}=C_1+C_2 \end{equation}
+
+\subsubsection{Energy stored in capacitors}
+
+Given a triangle of charges with side length $a$, what is the potential energy stored in this configurations? We can take the sum of the work needed
+to bring each charge into position, $W_n$, and sum them.
+
+For the first, there are no charges, so $W_1=0$. The second has one charge, so it is $qV_1$. Finally, the third has 2 charges already, so it does $qV_2$. Therefore,
+the total work done is $2qV_1+qV_2$
+
+When storing energy in a capacitor, this effect happens. The more charges that are moved to the capacitor plates, the more energy is needed to move the next charges. When solving the integral, we get $\frac{1}{2} \frac{Q}{V}$ as the total energy.
+
+To calculate energy stored in parallel OR series capacitors, we simply find the equivalent capacitance $C_{eq}$ and solve $0.5 C_{eq} V^2$.
+
+\subsection{Dielectrics}
+
+The dielectric is the material between the conducting plates in the capacitor. 
+Different dielectrics are used for: 
+
+\begin{itemize}
+	\item Having varied dielectric breakdown values
+	\item Storing different amounts of charge
+	\item Increasing capaacitance
+
+\end{itemize}
+
+Capacitanc increases because the induced charge density on the dielectric decreases between plates.
+
+How much is it reduced by? It depends on the dielectric constant of the material: $K$. With the dielectfic constant, we can get the electric charge in the dielectric as $\frac{E_{empty}}{K}$
+
+\subsubsection{Capacitance with dielectrics}
+
+With a dielectric, the capacitance is 
+\begin{equation} C_{new}=KC \end{equation}
+
+What happens to the capacitance formulas though?
+
+With a dielectric all electrostatic equations work, as long as we replace
+
+\begin{equation} \epsilon_0 \rightarrow K\epsilon_0, K\epsilon_0 = \epsilon \end{equation}
+
+\section{Current, Resistance, and Electromotive Force}
+
+\subsection{Current}
+
+\subsubsection{The Story of electrical circuits}
+
+In a complete loop of conducting material, a battery (with voltage) produces an electric field in the conductor. These free charges accelerate through the 
+conductor, but hit stuff on the way and lose energy (resistance), reaccelerating after collision. The net result is a slow drift of charges (drift velocity)
+in one direction (current).
+
+Drift velocities are very slow ($1 mm/s$ to $1 cm/s$).
+
+\subsubsection{Ohm's Law}
+
+According to Ohm's Law, \begin{equation} E=\rho J \end{equation} where $J$ is the current density and $\rho$ is the resistivity (resistivity is a material property, NOT RESISTANCE). 
+$J$ is defined as \begin{equation}nqv_d=\frac{I}{A} \end{equation}
+A more important term here, however is the current $I$. This is defined as charge per unit time, \begin{equation} I=\frac{dQ}{dt} \end{equation}
+
+A key term is conventional current, which is the movement of positive charge. In real life, the positive charges don't move, but that ended up being 
+the custom historically, and it helps to not keep track of negative charges. Overall, it doesn't really matter.
+
+\subsubsection{Derivation of current density}
+
+How much charge passes a point in unit time? $n=\frac{charge count}{volume}$. We can find the charge moving through the conductor with $\delta Q=Nq=nVq=nA\delta x q$, where N is the amount of charges. 
+Getting derivative over time results in $\frac{\delta Q}{\delta t}=nAq\frac{\delta x}{\delta t}$. Finally, we get current, $I=nAqv_d$
+
+\subsubsection{Current in a wire}
+
+\begin{example}
+	If the current through a 0.511mm copper wire is defined as $I(t)=300mAe^{0.5s^{-1}t}=I_0e^{-\lambda t}$.\\
+	How much charge passes through per unit time? Well, we can integrate it $\int_0^4.5{I_0e^{-\lambda t}}=\frac{1}{-\lambda}I_0e^{-\lambda t}$. Evaluating
+	from 0 to 4.5, we get $\frac{I_0}{-\lambda}(e^{-\lambda*4.5}-1$. Plugging in, $\frac{300}{0.5}(1-e^{0.5*4.5})=537 mA s=537 mC$
+\end{example}
+
+\subsection{Circuits}
+
+What happens in a circuit?
+
+There is a potential difference delivered by a potential source. This potential source drives charges around a conductor in a closed loop, crossing through resistors and
+losing energy in the process. The charge carrier returns having lost all energy.
+
+\subsubsection{Terminal Voltage}
+
+The electromotive force applies a certain amount of work on a unit of charge. Unlike the emf, the voltage is the work done to move a charge from the terminals of the 
+battery. While the difference is very minor, they are technically different. The terminal voltage includes the internal resistance of the battery, while the electromotive 
+force does not.
+
+\subsubsection{Power}
+
+How much work does it take to move $dq$ through $V$?
+$$ dW= dq V $$
+
+The battery must then supply power equal to $P=\frac{dW}{dt}=\frac{dq}{dt}V=IV$. From Ohm's law, we can see how much a resistance dissipates power as
+
+\begin{equation} P=I^2R=\frac{V^2}{R}=IV \end{equation}
 
 \end{document}
