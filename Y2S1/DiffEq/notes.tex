@@ -511,4 +511,16 @@ What is $\laplace[U(t-a)]$? Breaking up the integral into the terms from $0$ to 
 	Harder here, we don't have $t-6$ in the exponent. If we force a $t-6$ in, we can add 12 to compensate and get $e^{2(t-6)}e^{12}$. We then get 
 	\\$\laplace[U(t-6)e^{2(t-6)}e^{12}]=e^{12}\laplace[U(t-6)e^{2(t-6)}]=\frac{e^{12}e^{-6s}}{s-2}$
 \end{example}
+
+We can use this to create situations with toggling forces. For example, a 
+spring mass system with $m=1,k=4$ and an external force of 4N at $t=3$
+can be modeled as $y''+4y=4U(t-3)$.
+
+\subsubsection{Inverse of second shifting theorem}
+
+The operation is simple, $$\laplace^{-1}[e^{as}F(s)]=U(t-a)f(t-a)$$
+
+\begin{example}
+	$\laplace^{-1}[e^{-2s}\frac{3}{s^2-9}]=U(t-2)\sin{3(t-2)}$
+\end{example}
 \end{document}
