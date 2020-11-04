@@ -232,4 +232,103 @@ The battery must then supply power equal to $P=\frac{dW}{dt}=\frac{dq}{dt}V=IV$.
 
 \begin{equation} P=I^2R=\frac{V^2}{R}=IV \end{equation}
 
+\subsection{RC Circuits}
+
+\subsubsection{Series and parallel resistance}
+
+In series resistance, series resistors are arranged so that theres a single current path, meaning that the current is the same across them. The voltage drop is equal to 
+the sum of their voltage drops. Therefore, the resistances are equal to $$R_{eq}=R_1+R_2+...=\sum_i{R_i}.$$
+
+In parallel, the voltage drop across each is equal but the resistances are equal to the sum of each individual resistor. The equivalent resistance is $$R_{eq}=\sum_i{\frac{1}{R_i}}$$
+
+\subsubsection{Kirchhoff's Rules}
+
+The two important rules are:
+
+\begin{itemize}
+	\item Junction Rule: At a junction, the current entering must be equal to the current exiting the junction: $$\sum{I_{in}}+\sum{I_{out}}=0$$
+
+	\item Loop Rule: The sum of voltage difference in any loop is 0.
+\end{itemize}
+
+When analyzing a circuit, it is important to keep consistency with current direction. It doesn't matter in what direction the current goes, but keep it consistent and 
+invert the current if it comes out negative.
+
+\subsubsection{RC Circuits}
+
+An important distinction with RC ciircuits (resistors and capacitors) is that unlike resistor circuits, RC circuits evolve with time.
+There are two sepearate situation with RC circuits:
+\begin{enumerate}
+	\item When capacitors are initially uncharged, they begin acting as wires and then act as breaks in the circuit.
+	\item When capacitors are initially charged, they initially act as batteries and then act as breaks.
+\end{enumerate}
+
+With initially uncharged capacitors (assuming a battery, resistor, and capacitor), Kirchoffs loop rule gives $$ee-iR-\frac{q}{C}=0$$
+
+This can be rewritten as a differential $$\frac{dq}{dt}=\frac{e}{R}-\frac{q(t)}{RC}$$
+
+SInce we know how charge builds on it, we can solve the differential equation to get 
+\begin{equation} q(t)=Q_f(q-e^{t/RC}), Q_f=Ce \end{equation}
+
+where $Q_f$ is the final charge on the capacitor.
+
+RC circuits have an interesting connection. The time constant, $\tau$, ends up being $\tau=RC$ where $\tau$ is in seconds. At time $t=\tau, q(\tau)=0.63 Q_f$.
+At any point through the circuit, the current of the circuit at a function of time is $$I_0e^{-t/\tau}$$
+
+When capacitors start charged, Kirchoff's loop rule tells us that the current becomes time dependent. $$q(t)=Q_0(e^{-t/RC})$$
+
+At any time, the current through the circuit behaves the same as the uncharged capacitor circuit, $$I_0e^{-t/\tau}=Q_0/RC e^{-t/\tau}$$
+
+\section{Magnetism}
+
+Magnetic fields can be treated similarly to electric fields, but they have a few key differences
+
+\begin{itemize}
+	\item Electric fields are described by Coulomb's law, while magnets are described by Lorenz force law
+	\item Electric fields affect all charges, magnets affect moving charges.
+	\item Magnets are in Teslas.
+	\item Unlike electric fields, magnets have no monopoles
+\end{itemize}
+
+Due to convection, the core of the Earth is a large magnet as well. Currently, magnetic south is in the geographical North and magnetic nort in the Soutn. For reference, the strength of the magnetic field on the surface of the earth is 1 gauss.
+
+\subsection{Magnetic Flux}
+
+Magnetic flux defined just as magnetic flux was:
+$$\Phi=\int{\vec{B}* d\vec{A}}$$
+
+In a uniform field, this solves to
+$$\Phi=B*A$$
+
+This flux is used alot more often than electromagnetic flux.
+
+A key fact is that north and south poles can never be separated. Therefore, for magnetism, Gauss's Law in a closed surface is always 0, as equal amounts of positive and negative flux must exist.
+
+\subsection{Lorentz Force Law}
+
+A magnetic field exerts a force on a moving charged particle,
+
+$$F=q v \times B=qvB\sin{\theta}$$
+
+applying a force perpendicular to the field $B$ and velocity. The direction can be figured out from the right hand rule.
+
+Because magnetic force is perpendicular to the charged particle's velocity, it must undergo circular motion in a uniform field:
+$$F=qvB=\frac{mv^2}{r}$$
+
+This is the basis for mass spectrometry.
+
+We can solve for the radius of curvature, $r=\frac{mv}{qB}$
+
+\subsection{Charges in magnetic fields}
+
+In the presence of a magnetic field, a current carrying conductor experiences a force of $$F_B=I \vec{L}\times\vec{B}$$
+
+In this case, the vector form of the length follows the same direction as the charge.
+If the wire is not a straight line, you can integrate each small section of the wire.
+
+In a current loop, a magnetic field applies differing amounts of force based on the direction at that point in the loop. This generates a torque. The torque in that loop
+can be found by $$\tau=\mu\times\B$$ where $\mu$ is defined as the magnetic dipole moment, $$\mu=I\vec{A}$$. In a non changing field, the torque aligns $\mu$ with B.
+
+The magnetic dipole equation is valid for any loop shape, and its directio is determined by the right hand rule. This also associates a potential memory with the dipole, 
+$$U=-\mu\cdot B=-\mu B \cos{\theta}$$
 \end{document}

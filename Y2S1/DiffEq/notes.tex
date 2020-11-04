@@ -470,8 +470,9 @@ Rewritten, it becomes $Y(s)=\frac{\laplace[f(t)]+asy(0)+ay'(0)+by(0)}{as^2+bs+c}
 This is visible in case 2 in the table, $\laplace{t^n}=\frac{n!}{s^{n+1}}$, and case 4, $\laplace{e^{at}t^n}=\frac{n!}{(s-a)^{n+1}}$.
 Case 5 and 7 share the same properties ($\cos{kt}$ and $e^{at}\cos{kt}$), and 6 and 8.
 
-\begin{definition} [Unit Step Function (or Heaviside Step Functions)]
-	Defined as $U(t-a)$ or \\$H(t-a)=\begin{cases}
+\begin{definition} [Unit Step Function]
+	
+	Defined as \\$U(t-a)$ or \\$H(t-a)=\begin{cases}
 		0 & \text{if $0\leq t<a$}\\
 		1 & \text{if $a \leq t$}
 
@@ -523,4 +524,70 @@ The operation is simple, $$\laplace^{-1}[e^{as}F(s)]=U(t-a)f(t-a)$$
 \begin{example}
 	$\laplace^{-1}[e^{-2s}\frac{3}{s^2-9}]=U(t-2)\sin{3(t-2)}$
 \end{example}
+
+\section{Chapter 4: Systems of Linear Equations}
+
+\subsection{Basics of Matrices}
+Given one linear equation (ex. $2x+3y=5$), how many x/y solutions are there? Since there's only one equation, there are infinite possible solutions. 
+This can STILL BE IMPORTANT, but if you need one solution then this does not suffice.
+Given 2 equations, how many possible solutions are there (ex. $x+y=5, 3x+4y=17$)? This one would have one solution, namely 3,2. There is, however, another 
+situation with 2 solutions (ex. $x+y=5, 3x+3y=17$). This gives no possible solutions, and is known as an inconsistent system.
+
+These linear equations can be stored in the form $a_{11}x_1+a_{12}x_2...a_{1n}x_n=b_1, a_{21}x_1+a_{22}x_2...a_{2n}x_n=b_2, ..., a_{m1}x_1+a_{m2}x_2...a_{mn}x_n=b_m$. 
+This is a very unwieldy notation, but we can use matrices to represent these linear equations. We can insert the values as the rows/columns of a matrix, like so:
+$$
+\begin{bmatrix}
+	a_{11} & a_{12} & a_{13} & ... & a_{1n} \\
+	a_{21} & a_{22} & a_{23} & ... & a_{2n} \\
+	a_{31} & a_{32} & a_{33} & ... & a_{3n} \\
+	... & ... & ... & ... & ... \\
+	a_{m1} & a_{m2} & a_{m3} & ... & a_{mn} \\
+\end{bmatrix}
+\begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ .. \\ x_m\end{bmatrix} = \begin{bmatrix} b_1 \\ b_2 \\ b_3 \\ ... \\ b_m \end{bmatrix}
+$$
+
+This represents $A=m\times n$, using a matrix with $m$ rows and $n$ columns for the scalars and two $m$ length vectors, one for the unknowns and one for the
+constants. This notation makes these notably easier to work with when it comes to calculations (especially with software). 
+
+\subsubsection{Matrix operations}
+Two matrices A and B can only be subtracted $\iff$ they have the same dimensions. The operation is simple, just add/subtract the corresponding entries of A and B.
+\begin{example} $\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} + \begin{bmatrix} 1 & 0 \\ 2 & 1 \end{bmatrix} = \begin{bmatrix} 2 & 2 \\ 5 & 5 \end{bmatrix}$
+\end{example}
+
+Multiplication is not as simple. First of all, matrices A and B can be multiplied to AB $\iff n_a=m_b$. The amount of rows of A or columns of B do not matter.
+The resulting matrix is a matrix of size $m_a\times n_b$. This means that matrix multiplication is NOT commutative. The operation itself takes each row of A
+and multiplies it with each column of B. For example,
+$$\begin{bmatrix}a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix} * \begin{bmatrix}b_{11} & b_{12} & b_{13} \\ b_{21} & b_{22} & b_{23}\end{bmatrix}=$$
+$$
+\begin{bmatrix}
+a_{11}b_{11}+a_{12}+b_{21} & a_{11}b_{11}+a_{12}+b_{22} & a_{11}b_{13}+a_{12}+b_{23} \\ 
+a_{21}b_{11}+a_{22}+b_{21} & a_{21}b_{12}+a_{22}+b_{22} & a_{21}b_{13}+a_{22}+b_{23}
+\end{bmatrix}$$
+
+\begin{example} $\begin{bmatrix} 1 & 2 \\ 3 & 4 \\ 5 & 6 \end{bmatrix} * \begin{bmatrix} 2 \\ 5 \end{bmatrix}$
+	
+	Since sizes are $3\times 2, 2\times 1$, they result in a matrix of size $3\times 1$
+	$$AB=\begin{bmatrix} 2+10 \\ 6 + 10 \\ 10 + 30\end{bmatrix}=\begin{bmatrix}12\\26\\70\end{bmatrix}$$
+\end{example}
+
+\begin{example} $\begin{bmatrix} 1&2\\3&4\\0&4\end{bmatrix} * \begin{bmatrix}1&0\\0&1\end{bmatrix}$
+	$$AB=\begin{bmatrix} 1*1+2*0 & 1*0+2*1 \\ 3*1+0*4 & 3*0+1*4 \\ 0*1+0*4 & 0*0+1*4\end{bmatrix} = 
+	\begin{bmatrix} 1 & 2 \\ 3 & 4 \\ 0 & 4 \end{bmatrix}$$
+\end{example}
+
+In the above example, we saw how the matrix $\begin{bmatrix}1&0\\0&1\end{bmatrix} $ gave the same value after multiplication. This is an example of the 
+identity matrix, in this case for matrices of 2 columns. In general, the identity matrix follows the given pattern:
+$$\begin{bmatrix}1&0&0&...&0\\0&1&0&...&0\\0&0&1&...&0\\...&...&...&...&...\\0&0&0&...&1\end{bmatrix}$$
+
+Importantly, given a matrix A, $AI=IA=A$.
+
+Other special matrices are:
+\begin{itemize}
+	\item A square matrix is a matrix where $m=n$.
+	\item An upper triangular matrix is a square matrix where all the elements below the main diagonal are 0.
+	\item A lower triangular matrix is a square matrix where all elements above the main diagonal are 0.
+	\item A diagonal matrix is a square matrix where all the elements outside of the main diagonal are 0 (both lower and upper triangular).
+	\item As seen before, an identity matrix is a diagonal matrix with all diagonal elements being 1.
+\end{itemize}
+
 \end{document}
