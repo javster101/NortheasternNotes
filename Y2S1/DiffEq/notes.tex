@@ -590,4 +590,112 @@ Other special matrices are:
 	\item As seen before, an identity matrix is a diagonal matrix with all diagonal elements being 1.
 \end{itemize}
 
+The transpose of a matrix, $A^T$, is an $n\times m$ matrix with columns and rows swapped, and $A A^T, A^T A$ is always defined.
+
+
+\subsection{Elementary Operations, Row Echelon, and Gaussian Elimination}
+
+\begin{definition}
+An $m\times n$ matrix A is said to be in Row Echelon Form if
+\begin{enumerate}
+	\item The first non-zero element of any row is a 1 (leading element).
+	\item The leading one of any subsequent row is to the right of the 
+		leading one of the row above
+	\item Any rows full of 0 must be at the bottom.
+\end{enumerate}
+\end{definition}
+Examples are $\begin{bmatrix}1&2&2\\0&1&3\\0&0&1\end{bmatrix}$ and 
+$\begin{bmatrix}1&0\\0&1\\0&0\\0&0\end{bmatrix}$.
+
+If a matrix is not an REF, we can make it an REF by using suitable Elementary Row Operations:
+\begin{enumerate}
+	\item Swap any two rows
+	\item Multiply any row by a suitable non-zero scalar
+	\item Add any two rows or their multiples
+\end{enumerate}
+
+\begin{example}
+	Find REF of $\begin{bmatrix}1&-3&7&2\\2&-5&4&8\\-3&1&0&9\end{bmatrix}$
+
+	We know we need a 0 at [1][0]. We can do $R2-R1$ and get $\begin{bmatrix}
+	1&-3&7&2\\0&1&-10&4\\-3&1&0&9\end{bmatrix}$.
+
+	We also need a 0 in R3, we can do $R3-3R1$: $\begin{bmatrix} 1&-3&7&2\\0&1&-10&4\\0&-8&21&15\end{bmatrix}$
+
+	Replace R3 with R3+8R2:  $\begin{bmatrix} 1&-3&7&2\\ 0&1&-10&4\\0&0&-59&47\end{bmatrix}$
+	
+	Finally, divide R3 by -59: $\begin{bmatrix} 1&-3&7&2\\ 0&1&-10&4\\0&0&1&-\frac{47}{59}\end{bmatrix}$. 
+\end{example}
+
+Importantly, the REF is not always unique for a given matrix, there may be multiple different operations that can be done. 
+The true unique form is the Reduced Row Echelon Form.
+\begin{definition}
+	The Reduced Row Echelon Form is an REF if the entries above each leading one are 0, and are unique.
+\end{definition}
+
+An example is $\begin{bmatrix}1&0&0&2&0\\0&1&0&3&0\\0&0&0&0&1\end{bmatrix}$. 
+Both are usable. The REF leaves more work for later, while an RREF has more work up front.
+
+\begin{definition}[Gaussian Elimination]
+	Given a system of m linear equations and n variables $A\vec{x}=\vec{b}$, we define the augmented matrix
+	$A|\vec{b}$ by joining B to A. To do Gaussian Elimination, $A|\vec{b}$ is converted to an REF and back substituted from the last row to the first.
+\end{definition}
+
+\begin{example}
+	Solve $a+5b+2c=1, -a-4b+c=6, a+3b-3c=-9$.
+
+	$A|B=\left[\begin{array}{ccc|c}
+			1&5&2&-1\\-1&-4&1&6\\1&3&-3&-9
+			\end{array}\right]$,
+	after REF we get $\left[\begin{array}{ccc|c}
+		1&5&2&1\\0&1&3&7\\0&0&1&4
+	\end{array}\right]$
+
+	Back substituting, we get\\ 
+	$0a+0b+1c=4,c=4, 0a+1b+3*4=7, b=-5, a+5*-5+2*4=1=a=18$.\\
+	This then gives
+	the final solution $\vec{x}=\begin{bmatrix}18\\-5\\4\end{bmatrix}$.
+\end{example}
+
+Three outcomes can result after making the REF:
+\begin{enumerate}
+	\item All three rows have one item more than the previous and the
+		last one isn't zero, giving one solution.
+	\item The last matrix item is a row of 0, giving no solution
+	\item There are more variables than functions, giving many solutions.
+\end{enumerate}
+
+In cases with more variables than functions, the matrix will result in some columns that do not end in a 1, called pivot columns. The variables corresponding
+to pivot columns are called free variables, and the remaining variables
+(basic variables) are solved for in terms of free variables.
+
+\begin{example}
+	Solve $a-2b+3c+2d+e=10, 2a-4b+8c+3d+10e=7, 3a-6b+10c+6d+5e=27$.
+
+	Row echelon becomes 
+	$\left[\begin{array}{ccccc|c}
+			1&-2&3&2&1&10\\0&0&1&0&2&-3\\0&0&0&1&-4&7
+	\end{array}\right]$
+
+	Basic variables are $a,c,d$, free are $b,e$.
+
+	$R3: d-4e=7, d=7+4e\\
+	R2: c+2e=-3, c=2e-3\\
+	R1: a-2b+3c+4d+e=10, a-2b+3(2e-3)+2(7+4e)+e=10, a-2b+6e-9+14+8e+e=10,\\
+	a=5-3e+2b$.
+
+	Solution becomes $\vec{x}=\begin{bmatrix}5-3e+2b\\0+0e+b\\-3-2e+0b\\
+	7+4e+0b\\0+0e+0b\end{bmatrix}$
+
+	In vector form, this is $\vec{x}=
+		\begin{bmatrix} 5\\0\\-3\\7\\8\end{bmatrix}
+		+e\begin{bmatrix}-3\\0\\-2\\4\\1\end{bmatrix}
+		+b\begin{bmatrix}2\\1\\0\\0\\0\end{bmatrix}$
+\end{example}
+
+In all these cases, the right hand side $\vec{b} \neq \vec{0}$, called a non-homogeneous system.
+If it is 0, it is a homogeneous system. Obviously, $\vec{x}=0$ is always a solution. This means that 
+homogeneous systems are NEVER inconsistent (always 1 base solution). Is there another solution though? 
+
+Since the only alternative to one solution is infinite solution, finding the answer is as easy as looking for free variables. Fortunately, we can skip the augmented column as its just 0.
 \end{document}
