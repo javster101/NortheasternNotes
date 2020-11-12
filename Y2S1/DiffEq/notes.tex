@@ -592,7 +592,6 @@ Other special matrices are:
 
 The transpose of a matrix, $A^T$, is an $n\times m$ matrix with columns and rows swapped, and $A A^T, A^T A$ is always defined.
 
-
 \subsection{Elementary Operations, Row Echelon, and Gaussian Elimination}
 
 \begin{definition}
@@ -636,6 +635,8 @@ The true unique form is the Reduced Row Echelon Form.
 An example is $\begin{bmatrix}1&0&0&2&0\\0&1&0&3&0\\0&0&0&0&1\end{bmatrix}$. 
 Both are usable. The REF leaves more work for later, while an RREF has more work up front.
 
+The rank of a matrix is the number of nonzero rows of the matrix's REF or RREF.
+\subsubsection{Gaussian Elimination}
 \begin{definition}[Gaussian Elimination]
 	Given a system of m linear equations and n variables $A\vec{x}=\vec{b}$, we define the augmented matrix
 	$A|\vec{b}$ by joining B to A. To do Gaussian Elimination, $A|\vec{b}$ is converted to an REF and back substituted from the last row to the first.
@@ -698,4 +699,124 @@ If it is 0, it is a homogeneous system. Obviously, $\vec{x}=0$ is always a solut
 homogeneous systems are NEVER inconsistent (always 1 base solution). Is there another solution though? 
 
 Since the only alternative to one solution is infinite solution, finding the answer is as easy as looking for free variables. Fortunately, we can skip the augmented column as its just 0.
+
+These REFs can also be analyzed through their ranks. 
+\begin{itemize}
+	\item Rank=$m$, the system is consistent but nothing else is known.
+	\item Rank=$n$, all columns are pivot columns, so no free variables
+		and therefore there is only one solution.
+\end{itemize}
+
+\subsection{Inverse of a matrix}
+
+Given A, an $n\times n$ square matrix, the inverse of A if it exists is
+another $n\times n$ matrix denoted by $A^{-1}$ such that $AA^{-1}=A^{-1}A=I$.
+
+\begin{itemize}
+	\item 2x2 matrix 
+		$A=\begin{bmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{bmatrix}$: 
+		
+		The inverse is simple, 
+		$$A^{-1}=\frac{1}{a_{11}a_{22}-a_{12}a_{21}}
+		\begin{bmatrix}a_{22}&-a_{12}\\-a_{21}&a_{11}\end{bmatrix}$$
+
+		The inverse only fails to exist when the denominator is 0.
+	\item For 3x3 and bigger, use the Gauss Jordan method:
+		\begin{enumerate}
+			\item Augment A with $I_{n\times n}$
+			\item Row reduce A to I, and then the augmented
+				I becomes $A^{-1}$
+		\end{enumerate}
+\end{itemize}
+
+How do we use the inverses?
+
+Given a system $A\vec{x}=\vec{b}$, we can pre-multiply $A^{-1}$ on both sides:
+$$A^{-1}A\vec{x}=A^{-1}\vec{b}, \vec{x}=A^{-1}\vec{b}$$
+
+We can then just solve the right term to get $\vec{x}$.
+
+\subsection{Determinants}
+
+The determinant of a 2x2 matrix is calculated as $a_{11}a_{22}-a_{12}a_{21}$
+
+Higher order elements have the following process for taking determinants:
+\begin{enumerate}
+	\item Finding the minor of each top row element $M_{ij}$
+		(the $(n-1)\times(n-1)$ determinant obtained by deleting the 
+		row and column containing $a_{ij}$). 
+	\item Find each cofactor $C_{ij}=(-1)^{i+j}M_{ij}$ 
+	\item Sum the cofactors
+\end{enumerate}
+This works with ANY row or column, not just the top one.
+
+Determinant properties:
+\begin{itemize}
+	\item Swapping any two rows of a matrix, the determinant value negates.
+	\item If any two rows or columns are either the same or a scalar 
+		multiple of each other, the determinant is 0.
+	\item The determinant of an upper or lower triangular matrix is
+		the product of the numbers along the diagonal.
+\end{itemize}
+
+\begin{theorem}Invertible Matrix Theorem
+
+	Given an $n\times n$ matrix A where $\det{A}\neq0$, the following are 
+	true:
+	\begin{itemize}
+		\item A is invertible ($A^{-1}$ exists)
+		\item The system $A\vec{x}=\vec{b}$ has a unique solution 
+			$\vec{x}=A^{-1}\vec{b}$
+		\item Rank(A)=n
+		\item RREF(A)=$I_{n\times n}$
+		\item System has no free variables
+	\end{itemize}
+	If the determinant is 0, the inverses of all of the above statements
+	are true.
+\end{theorem}
+
+\section{Vector Spaces}
+\subsection{Vector}
+The common definition of a vector is an element with magnitude and direction. 
+This notion is only one way of making a vector, however. In general, a vector
+can represent almost any mathematical object (matrices, polynomials, other 
+functions, typical vectors, etc).
+
+\begin{definition}
+	A vector space (or vector set) V is a collection of homogeneous vectors
+	with the following properties: 
+	\begin{enumerate}
+		\item If $\vec{u},\vec{v}$ are in V, then $\vec{u}+\vec{v}$ is
+			also in V.
+		\item If $k$ is a scalar and $\vec{u}$ is in V, then $k\vec{u}$
+			is in V.
+		\item $\vec{u}+\vec{v}=\vec{v}+vec{u}$
+		\item $\vec{u}+(\vec{v}+\vec{w})=(\vec{u}+\vec{v})+\vec{w}$
+		\item $k(\vec{u}+\vec{v})=k\vec{u}+k\vec{v}$
+		\item $\vec{u}+\vec{0}=\vec{u}$
+		\item $\vec{u}*1=\vec{u}$
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}
+	Let V be  a vector space and S be a subset of V. We call S a subspace
+	of V if 
+	\begin{enumerate}
+		\item For all $\vec{u}, \vec{v}$ in S, $\vec{u}+\vec{v}$ is 
+			also in S.
+		\item For a scalar k and $\vec{u}$ in S, $k\vec{u}$ is also
+			in S.
+	\end{enumerate}
+\end{definition}
+
+In general, solving these problems involves giving a bad example of the 
+statement given.
+
+\subsection{Nullspace of a matrix}
+\begin{definition}
+	For any $m\times n$ matrix A, the nullspace $Null(A)$ or $N(A)$ is the
+	set of all $\vec{x}$ such that $A\vec{x}=\vec{0}$.
+\end{definition}
+
+This is equivalent to solving a homogeneous system.
 \end{document}
