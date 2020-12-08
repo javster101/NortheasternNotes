@@ -327,7 +327,7 @@ In this case, the vector form of the length follows the same direction as the ch
 If the wire is not a straight line, you can integrate each small section of the wire.
 
 In a current loop, a magnetic field applies differing amounts of force based on the direction at that point in the loop. This generates a torque. The torque in that loop
-can be found by $$\tau=\mu\times\B$$ where $\mu$ is defined as the magnetic dipole moment, $$\mu=I\vec{A}$$. In a non changing field, the torque aligns $\mu$ with B.
+can be found by $$\tau=\mu\times B$$ where $\mu$ is defined as the magnetic dipole moment, $$\mu=I\vec{A}$$. In a non changing field, the torque aligns $\mu$ with B.
 
 The magnetic dipole equation is valid for any loop shape, and its directio is determined by the right hand rule. This also associates a potential memory with the dipole, 
 $$U=-\mu\cdot B=-\mu B \cos{\theta}$$
@@ -337,6 +337,7 @@ A moving particle produces a magnetic field in concentric circles around it
 with strength $$B=\frac{\mu_0}{4\pi} \frac{q\vec{v}\times \hat{r}}{r^2}$$
 
 $\mu_0$, the magnetic permeability, is the measure of a material to produce a
+
 magnetic field, $$\mu_0=4\pi * 10^-7 T$$.
 
 Some simplifications for the field are:
@@ -349,4 +350,137 @@ Some simplifications for the field are:
  A current produces a magnetic field similar in behavior to that produced by
  the charge.
  $$B=\frac{\mu_0}{4\pi} \int{\frac{I \vec{dL}\times\hat{r}}{r^2}}$$
+
+ \subsubsection{Ampere's Law}
+ Like with electric fields, Ampere's law can be used in cases of symmetry similarly to Gauss.
+
+ $$\int{B\cdot dl}=\mu_0 I$$
+
+ \begin{enumerate}
+	\item Use symmetry to illustrate field lines around an object
+	\item Draw an Amperian loop in the direction of the field lines
+	\item Integrate along a field line witha constant field
+	\item Determine the enclosed current
+	\item Solve for B
+ \end{enumerate}
+
+
+\section{Induction}
+
+\subsection{Faraday's Law of Induction}
+This law describes the induced electromotive force caused by a changing magnetic flux.
+$$\epsilon=\frac{-d\omega_B}{dt}$$
+
+The negative sign indicates that the EMF opposes the change in magnetic flux.
+
+This describes the induced voltage created by a flux. If the field is constant, the equations below are valid:
+
+$$\epsilon=\frac{dB}{dt}A\cos{\theta}-B\frac{dA}{dt}\cos{theta}+BA\frac{d\theta}{dt}\sin{theta}$$
+
+When multiple turns are included, the EMF gets multiplied by the amount of turns.
+
+An isolated conducting rod becomes a source of EMF when moved through a field. In general, this emf can be found with 
+
+$$\epsilon=\int{|\vec{v}\times\vec{B}|\cdot dl}$$
+
+This emf is applied from the center to the two ends.
+
+A changing field through a solid conductor introduces an emf which produces eddy currents, which are swirling currents in small loops.
+These currents then create a force that oppose the motion of the conductor.
+
+An example of use of eddy currents is metal detectors, where a large magnet makes a field in metallic objects in the field, producing 
+an eddy current. This current can then be measured.
+
+\subsection{Induced Electric Field}
+As shown earlier, an emf is produced by a changing magnetic flux. What happens if there is no conductor present, however?
+
+An electric field is produced!
+
+$$\int{\vec{E}\cdot dl}=-\frac{d\Omega}{dt}$$
+
+This is a different electric field, since it is not electrostatic. This means that:
+
+\begin{enumerate}
+	\item Non-conservative
+	\item Does not have an electric potential associated
+	\item Still exerts a force on a charge
+\end{enumerate}
+
+\begin{example}
+	Consider a very long solenoid with a radius R and a current
+	 $$I(t)=I_0\sin{\omega t}$$
+
+	 What is the magnetic field in the solenoid and the electric field outside?
+
+	 Magnetic: $B(t)=\mu_0 n I_0\sin{\omega t}$
+
+	 Electric: $E=?, \int{E\dot dl}=-\frac{d\Omega}{dt}$
+
+	 $E\int{dl}=E(2\pi r)=-\frac{d}{dt}(\pi R^2 B(t))$
+
+	 $E=\frac{\pi R^2}{2\pi r} (\mu_0 n I_0 \sin{\omega t})'=\frac{\pi R^2}{2\pi r} (\omega \mu_0 n I_0 \cos{\omega t})$
+ \end{example}
+
+\subsection{Displacement Currents}
+
+What happens around a parallel plate capacitor when they are charging?
+
+There is a displacement current between plates that induces a magnetic field, $$I_d=\epsilon_0\frac{d\Omega}{dt}$$
+
+Charge on capacitors: $q=CV=A\epsilon_0 \frac{V}{d}=\epsilon_0 EA=\epsilon_0 \Omega$
+
+When charging: $i_c=\frac{dq}{dt}=\epsilon_0\frac{d\Omega}{dt}=i_{disp}$
+
+\section{Waves}
+
+Maxwell's Equations are:
+\begin{itemize}
+	\item Gauss's Law: $\int{E\cdot dA}=0$
+	\item Faraday's Law: $\int{E\cdot dL}=\frac{d\Omega_B}{dt}$
+	\item Ampere's Law: $\int{E\cdot dL}=\frac{d\Omega_E}{dt}$
+
+\end{itemize}
+
+The fact that Faraday's law incites a change in the magnetic field, affecting Ampere's law which does the same for electric fields, 
+represents the effect of electromagnetic waves.
+
+In simple harmonic motion to waves, we can find the position of any vertical type of wave as 
+$y(t)=\cos{\omega t + \phi}$. Even though SHM requires 1 mass, mechanical
+waves require a collection of masses. This still works, however, because the "object" moving is the wave itself.
+
+To begin a mechanical wave, we'd need a disturbance in some medium with elements that interact and a force that tries to restore them.
+For EM waves, however, all that is needed is an accelerating particle or an "accelerating" field. NO MEDIUM IS NEEDED.
+
+At a point in space, the position  of an oscillating element can be described as undergoing SMH.
+
+$$\frac{d^2y(x_0,t)}{dt^2}=-\omega^2y-(x_0,t)$$
+
+In addition, at some point in time , the positions can also be described in those terms, 
+
+$$\frac{d^2y(x_0,t_0)}{dx^2}=-k^2y-(x,t_0)$$
+
+This number k is considered to be the "wave number" of this wave.
+
+A periodic, sinusoidal, traveling wave can be described by both
+
+$$y(x,t)=A\sin{(kx\pm \omega t)}$$
+$$y(x,t)=A\cos{(kx\pm \omega t)}$$
+
+Many waves can be described as both. For example, a sound wave can be seen as either a displacement wave (of the air molecules)
+or a pressure wave. 
+
+$$s(x,t)=s_{max}\cos{(kx\pm \omega t)}$$
+$$\Delta p(x,t)=\Delta p_{max}\sin{(kx\pm \omega t)}$$
+
+\subsection{Wave speed}
+
+Since the waveform shape is constant ($kt\pm \omega t = constant$), we can define the speed as 
+$$v_{wave}=\pm \frac{\omega}{k}=\frac{\lambda}{T}=\lambda f$$
+
+The speed of mechanical waves are determined solely by the properties of the medium, and the frequency and wavelength simply
+define the result.
+
+$$v=\sqrt{\frac{restoring force}{intertial term}}$$
+
+As a basic one, the speed of a wave on a string is $v=\sqrt{\frac{F_T}{\mu}}$ where $\mu$ is the linear mass density.
 \end{document}
